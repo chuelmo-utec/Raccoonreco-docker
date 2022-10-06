@@ -1,7 +1,6 @@
-version: '3.1'
+version: "3.1"
 
 services:
-
   postgres:
     image: postgres
     restart: always
@@ -29,7 +28,7 @@ services:
       - 8086:80
     volumes:
       - ./pgadmin-data:/var/lib/pgadmin
- 
+
   nginx:
     build:
       context: ./Dockerfiles
@@ -38,7 +37,7 @@ services:
       - 80
     ports:
       - 8080:80
-  
+
   flask:
     build:
       context: ./Dockerfiles
@@ -52,5 +51,3 @@ services:
         condition: service_healthy
     links:
       - postgres
-
-

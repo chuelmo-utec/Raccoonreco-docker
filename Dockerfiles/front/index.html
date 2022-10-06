@@ -142,7 +142,7 @@
 
                 var data = canvas.toDataURL('image/png');
                 photo.setAttribute('src', data);
-                fetch('http://localhost:9393/recognize', {
+                fetch('http://127.0.0.1:5000/recognize', {
                     method: 'POST', // Default is 'get'
                     body: JSON.stringify({imageEncoded: data}),
                     mode: 'cors',
@@ -153,8 +153,8 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Response ' + data + ' ' + data[0][0] + ' ' + data[0][1] + ' ' + data[0][2]);
-                    document.getElementById('recognizedResult').innerHTML = `Id: ${data[0][0]} <br> Nombre: ${data[0][1]} <br> Cercania: ${data[0][2]}`;
+                    console.log('Response', data);
+                    document.getElementById('recognizedResult').innerHTML = `Id: ${data[0]} <br> Nombre: ${data[1]} <br> Cercania: ${data[2]}`;
                 })
             } else {
                 clearphoto();

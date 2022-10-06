@@ -146,7 +146,7 @@
                 const name = document.getElementById('name').value
                 var data = canvas.toDataURL('image/png');
                 photo.setAttribute('src', data);
-                fetch('http://localhost:9393/user', {
+                fetch('http://127.0.0.1:5000/user', {
                     method: 'POST', // Default is 'get'
                     body: JSON.stringify({imageEncoded: data, name}),
                     mode: 'cors',
