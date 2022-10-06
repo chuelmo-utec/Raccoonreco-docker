@@ -1,8 +1,25 @@
+import psycopg2
+
+try:
+    con = psycopg2.connect(
+        host="postgres",
+        port=5432,
+        database='postgres',
+        user='postgres',
+        password='OpenCV'
+    )
+except:
+    print('connection failed!')
+    con = None
+
+cur = con.cursor()
+
+cur.execute("""
 CREATE OR REPLACE FUNCTION public.vec_sub(arr1 double precision[], arr2 double precision[])
  RETURNS double precision[]
  LANGUAGE sql
  STRICT
-AS $fun01$	
+AS $function$	
 SELECT array_agg (result)
     FROM (SELECT (tuple.val1 - tuple.val2) * (tuple.val1 - tuple.val2)
         AS result
@@ -11,23 +28,29 @@ SELECT array_agg (result)
                , generate_subscripts ($1, 1) AS ix) tuple
     ORDER BY ix) inn;
 	
-	$fun01$
+	$function$
 
-
+""")
+cur.execute('''
 CREATE OR REPLACE FUNCTION public.euclidian(arr1 double precision[], arr2 double precision[])
  RETURNS double precision
  LANGUAGE sql
-AS $fun02$
+AS $function$
 select sqrt (SUM (tab.v)) as euclidian from (SELECT
      UNNEST (vec_sub (arr1, arr2)) as v) as tab;
-	 $fun02$
+	 $function$
 
+''')
 
+cur.execute('''
 CREATE TABLE IF NOT EXISTS public.face_table
 (
-    id bigint NOT NULL,
+    id serial NOT NULL,
     name character varying(100) NOT NULL,
     face_embedding double precision[] NOT NULL,
     PRIMARY KEY (id)
 );
+'''
+            )
 
+con.commit()

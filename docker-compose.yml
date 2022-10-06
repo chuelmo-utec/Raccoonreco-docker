@@ -15,6 +15,11 @@ services:
       - 5432:5432
     volumes:
       - ./pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   pgadmin4:
     image: dpage/pgadmin4
@@ -45,8 +50,9 @@ services:
     ports:
       - 9393:5000
     depends_on:
-      - nginx
-      - pgadmin4
+      postgres:
+        condition: service_healthy
+    links:
       - postgres
 
 
