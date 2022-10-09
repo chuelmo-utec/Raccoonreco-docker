@@ -29,14 +29,13 @@ services:
     volumes:
       - ./pgadmin-data:/var/lib/pgadmin
 
-  nginx:
+  react:
     build:
       context: ./Dockerfiles
-      dockerfile: nginx_files
-    expose:
-      - 80
+      dockerfile: react_files
+    stdin_open: true
     ports:
-      - 8080:80
+      - 3000:3000
 
   flask:
     build:
