@@ -5,7 +5,11 @@ FROM node:13.12.0-alpine
 WORKDIR /app
 
 # add app
-COPY ./Raccoonreco-frontend/ ./
+COPY .env ./
+COPY package.json ./
+COPY package-lock.json ./
+COPY ./src ./src
+COPY ./public ./public
 
 # install app dependencies
 RUN npm install --silent --legacy-peer-deps
