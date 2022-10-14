@@ -2,3 +2,9 @@ LFW
 __pycache__
 pg-data
 pgadmin-data
+pgadmin4-data
+tmp
+front
+Raccoonreco
+Raccoonreco-frontend
+.env
