@@ -11,7 +11,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./pg-data:/var/lib/postgresql/data
+      - ${POSTGRESQL_VOLUME}:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -27,20 +27,22 @@ services:
     ports:
       - 8086:80
     volumes:
-      - ./pgadmin-data:/var/lib/pgadmin
+      - ${PGADMIN_VOLUME}:/var/lib/pgadmin
 
   react:
     build:
-      context: ./Dockerfiles
-      dockerfile: react_files
+      context: ${REPO_FRONT_PATH}
+      dockerfile: ${REPO_PATH_INFRASTRUCTURE}/Dockerfiles/react_files
     stdin_open: true
     ports:
       - 3000:3000
-
+    volumes:
+      - ${REPO_FRONT_PATH}/:/usr/src/app
+  
   flask:
     build:
-      context: ./Dockerfiles
-      dockerfile: flask_files
+      context: ${REPO_BACK_PATH}
+      dockerfile: ${REPO_PATH_INFRASTRUCTURE}/Dockerfiles/flask_files
     expose:
       - 5000
     ports:
@@ -50,3 +52,7 @@ services:
         condition: service_healthy
     links:
       - postgres
+    volumes:
+      - ${REPO_BACK_PATH}/:/app
+    environment:
+      - FLASK_ENV=development
