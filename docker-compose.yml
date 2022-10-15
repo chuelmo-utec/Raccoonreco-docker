@@ -37,7 +37,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ${REPO_FRONT_PATH}/:/app
+      - ${REPO_FRONT_PATH}/src:/app/src
   
   flask:
     build:
