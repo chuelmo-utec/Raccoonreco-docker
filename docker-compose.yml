@@ -38,6 +38,8 @@ services:
       - 3000:3000
     volumes:
       - ${REPO_FRONT_PATH}/src:/app/src
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
   
   flask:
     build:
