@@ -1,16 +1,5 @@
-# pull official base image
-FROM node:16.15.0-alpine
-
-# set working directory
-WORKDIR /app
-
-# add app
-COPY ./ ./
-
-# install app dependencies
-RUN npm install -g yarn lerna --force
-
-RUN lerna bootstrap --no-ci --use-workspaces
-
+FROM nginx:mainline
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./packages/main/build /usr/share/nginx/html
 # start app
-CMD ["yarn", "run", "start:main"]
+CMD ["nginx", "-g", "daemon off;"]
