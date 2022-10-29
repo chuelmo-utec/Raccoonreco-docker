@@ -7,18 +7,6 @@ WORKDIR /app
 # add app
 COPY ./ ./
 
-COPY ./node_modules ./
-COPY ./package.json ./
-
-COPY ./packages/main/node_modules ./packages/main/
-COPY ./packages/main/package.json ./packages/main/
-
-COPY ./packages/components/node_modules ./packages/components/
-COPY ./packages/components/package.json ./packages/components/
-
-COPY ./packages/shared/node_modules ./packages/shared/
-COPY ./packages/shared/package.json ./packages/shared/
-
 # install app dependencies
 RUN npm install -g yarn lerna --force
 
