@@ -1,19 +1,28 @@
 # pull official base image
-FROM node:13.12.0-alpine
+FROM node:16.15.0-alpine
 
 # set working directory
 WORKDIR /app
 
 # add app
-COPY .env ./
-COPY package.json ./
-COPY package-lock.json ./
-COPY ./src ./src
-COPY ./public ./public
+COPY ./ ./
+
+COPY ./node_modules ./
+COPY ./package.json ./
+
+COPY ./packages/main/node_modules ./packages/main/
+COPY ./packages/main/package.json ./packages/main/
+
+COPY ./packages/components/node_modules ./packages/components/
+COPY ./packages/components/package.json ./packages/components/
+
+COPY ./packages/shared/node_modules ./packages/shared/
+COPY ./packages/shared/package.json ./packages/shared/
 
 # install app dependencies
-RUN npm install --silent --legacy-peer-deps
-RUN npm install react-scripts@5.0.1 -g --silent --legacy-peer-deps
+RUN npm install -g yarn lerna --force
+
+RUN lerna bootstrap --no-ci --use-workspaces
 
 # start app
-CMD ["npm", "start"]
+CMD ["yarn", "run", "start:main"]

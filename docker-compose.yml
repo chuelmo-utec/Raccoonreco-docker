@@ -37,10 +37,11 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ${REPO_FRONT_PATH}/src:/app/src
+      - ${REPO_FRONT_PATH}/packages:/app/packages
     environment:
-      CHOKIDAR_USEPOLLING: "true"
-  
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+
   flask:
     build:
       context: ${REPO_BACK_PATH}
