@@ -37,6 +37,8 @@ services:
       - 80
     ports:
       - 80:80
+    volumes:
+      - ${REPO_FRONT_PATH}/packages/main/build:/usr/share/nginx/html
 
   flask:
     build:
