@@ -1,3 +1,9 @@
+# Build 33b
+
+Para esta build creamos un volumen que apunta al build del proyecto, cada vez que hacemos un cambio en local,
+buildeamos (con yarn build), reiniciamos el servidor nginx en docker y se ven los cambios.
+Trabajar con la imagen build es muchísimo más rápido que trabajar con el servidor de desarrollo de React.
+
 # Raccoonreco-docker
 
 Este repo es parte de nuestro proyecto final de carrera en UTEC. <br>

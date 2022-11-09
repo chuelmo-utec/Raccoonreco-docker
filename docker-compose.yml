@@ -33,14 +33,12 @@ services:
     build:
       context: ${REPO_FRONT_PATH}
       dockerfile: ${REPO_PATH_INFRASTRUCTURE}/Dockerfiles/react_files
-    stdin_open: true
+    expose:
+      - 80
     ports:
-      - 3000:3000
+      - 80:80
     volumes:
-      - ${REPO_FRONT_PATH}/packages:/app/packages
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true
+      - ${REPO_FRONT_PATH}/packages/main/build:/usr/share/nginx/html
 
   flask:
     build:
@@ -55,7 +53,5 @@ services:
         condition: service_healthy
     links:
       - postgres
-    volumes:
-      - ${REPO_BACK_PATH}/:/app
     environment:
       - FLASK_ENV=development
