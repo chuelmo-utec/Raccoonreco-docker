@@ -53,7 +53,5 @@ services:
         condition: service_healthy
     links:
       - postgres
-    volumes:
-      - ${REPO_BACK_PATH}/:/app
     environment:
       - FLASK_ENV=development
